@@ -11,7 +11,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 4
   skip: True  # [win]
 
 requirements:
@@ -20,12 +20,10 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake 
     - ninja
+    - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
   host:
-    - python
     - gtest
     - pugixml
-  run:
-    - python
 
 test:
   commands:
