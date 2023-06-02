@@ -20,8 +20,8 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake 
     - ninja
-    - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
   host:
+    - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
     - gtest
     - pugixml
 
@@ -33,6 +33,9 @@ test:
     # Verify accessories
     - test -f $PREFIX/lib/libFaddeeva$SHLIB_EXT                             # [unix]
     - test ! -f $PREFIX/lib/libFaddeeva.a                                   # [unix]
+    - test -f $PREFIX/include/libecpint.hpp                                 # [unix]
+    - test -f $PREFIX/lib/cmake/ecpint/ecpint-config.cmake                  # [unix]
+    - test -f $PREFIX/share/libecpint/parseecp.py                           # [unix]
     # Inspect linkage
     - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT                                # [linux]
     - otool -L $PREFIX/lib/libecpint$SHLIB_EXT                              # [osx]
