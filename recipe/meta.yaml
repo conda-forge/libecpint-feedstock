@@ -1,13 +1,14 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
-{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
+{% set sha256 = "2bd2acfa8046fc69abc073be890ddd5f5361cd422ba5889dd47fe7077074bc07" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/robashaw/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  url: https://github.com/loriab/libecpint/archive/psiecp2023.tar.gz
+  #url: https://github.com/robashaw/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -20,8 +21,8 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake 
     - ninja
-  host:
     - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
+  host:
     - gtest
     - pugixml
 

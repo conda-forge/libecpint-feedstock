@@ -12,6 +12,7 @@ cmake ${CMAKE_ARGS} \
   -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -D CMAKE_INSTALL_LIBDIR=lib \
   -D LIBECPINT_BUILD_TESTS=ON \
+  -D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
 cmake --build build --target install -j${CPU_COUNT}
