@@ -1,35 +1,48 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
+{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/robashaw/libecpint/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc
+  url: https://github.com/robashaw/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  patches:
+    - 0001-cmake-migrate-C-standard-to-targets-59.patch
+  sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 4
   skip: True  # [win]
+  ignore_run_exports:
+    - pugixml                                                                          # ignore b/c static library
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake 
-    - make
+    - ninja
+    - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
   host:
-    - python
-    - gtest
+    - gtest                                                                            # for ctest testing
     - pugixml
-  run:
-    - python
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libecpint.a
-    - test -f ${PREFIX}/lib/libFaddeeva.a
+    # Verify library
+    - test -f $PREFIX/lib/libecpint$SHLIB_EXT                               # [unix]
+    - test ! -f $PREFIX/lib/libecpint.a                                     # [unix]
+    # Verify accessories
+    - test -f $PREFIX/lib/libFaddeeva$SHLIB_EXT                             # [unix]
+    - test ! -f $PREFIX/lib/libFaddeeva.a                                   # [unix]
+    - test -f $PREFIX/include/libecpint.hpp                                 # [unix]
+    - test -f $PREFIX/lib/cmake/ecpint/ecpint-config.cmake                  # [unix]
+    - test -f $PREFIX/share/libecpint/parseecp.py                           # [unix]
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT                                # [linux]
+    - otool -L $PREFIX/lib/libecpint$SHLIB_EXT                              # [osx]
 
 about:
   home: https://github.com/robashaw/libecpint
