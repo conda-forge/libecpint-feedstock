@@ -1,4 +1,3 @@
-#!/bin/bash
 
 echo PREFIX
 find ${PREFIX}/bin -name "*python*"
@@ -17,6 +16,7 @@ cmake ${CMAKE_ARGS} \
   -D LIBECPINT_USE_PUGIXML=ON \
   -D LIBECPINT_BUILD_TESTS=ON \
   -D LIBECPINT_BUILD_DOCS=OFF \
+  -D Python_EXECUTABLE="${PREFIX}/bin/python" \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
 cmake --build build --target install -j${CPU_COUNT}
