@@ -13,7 +13,6 @@ cmake %CMAKE_ARGS% ^
   -D CMAKE_INSTALL_INCLUDEDIR="Library\include" ^
   -D CMAKE_INSTALL_BINDIR="Library\bin" ^
   -D CMAKE_INSTALL_DATADIR="Library\share" ^
-  -D ambit_INSTALL_CMAKEDIR="Library\share\cmake\ambit" ^
   -D CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON ^
   -D BUILD_SHARED_LIBS=ON ^
   -D LIBECPINT_USE_PUGIXML=ON ^
@@ -30,7 +29,7 @@ cmake --build build ^
       -- -j %CPU_COUNT%
 if errorlevel 1 exit 1
 
-REM cd build
-REM ctest --rerun-failed --output-on-failure
-REM if errorlevel 1 exit 1
+cd build
+ctest --rerun-failed --output-on-failure
+if errorlevel 1 exit 1
 
