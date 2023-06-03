@@ -16,7 +16,7 @@ source:
 
 build:
   number: 4
-#  skip: True  # [win]
+  skip: True  # [osx]
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
 
