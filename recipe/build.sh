@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo PREFIX
+find ${PREFIX} -name "*python*"
+echo BUILD_PREFIX
+find ${BUILD_PREFIX} -name "*python*"
+
+
 cmake ${CMAKE_ARGS} \
   -S ${SRC_DIR} \
   -B build \

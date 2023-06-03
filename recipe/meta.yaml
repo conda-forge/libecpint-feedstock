@@ -27,7 +27,7 @@ requirements:
     - cmake
     - ninja
     #- python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
-    - python                                                                           # only for generating a source file, so suppress all but one Py version. update as necessary.
+    - python                                                                # [build_platform != target_platform]
     - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
