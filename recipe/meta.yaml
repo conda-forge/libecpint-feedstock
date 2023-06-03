@@ -16,6 +16,7 @@ source:
 
 build:
   number: 4
+#  skip: True  # [osx]
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
 
@@ -25,7 +26,8 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja
-    - python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
+    #- python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
+    - python                                                                           # only for generating a source file, so suppress all but one Py version. update as necessary.
     - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
