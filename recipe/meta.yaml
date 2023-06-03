@@ -1,7 +1,7 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
 #{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
-{% set sha256 = "2bd2acfa8046fc69abc073be890ddd5f5361cd422ba5889dd47fe7077074bc07" %}
+{% set sha256 = "ccfb63de58cdff06ce54e8c5acb57313777e7e0388611ae59ae73214688d1630" %}
 
 package:
   name: {{ name|lower }}
@@ -32,19 +32,29 @@ requirements:
     - pugixml
 
 test:
+  requires:
+    - m2w64-binutils                                               # [win]   # provides objdump.exe
   commands:
     # Verify library
     - test -f $PREFIX/lib/libecpint$SHLIB_EXT                               # [unix]
     - test ! -f $PREFIX/lib/libecpint.a                                     # [unix]
+    - if not exist %PREFIX%\\Library\\lib\\ecpint.lib exit 1                # [win]   # ms import lib
+    - if not exist %PREFIX%\\Library\\bin\\ecpint.dll exit 1                # [win]   # gnu/ms dyn lib
     # Verify accessories
     - test -f $PREFIX/lib/libFaddeeva$SHLIB_EXT                             # [unix]
     - test ! -f $PREFIX/lib/libFaddeeva.a                                   # [unix]
     - test -f $PREFIX/include/libecpint.hpp                                 # [unix]
     - test -f $PREFIX/lib/cmake/ecpint/ecpint-config.cmake                  # [unix]
     - test -f $PREFIX/share/libecpint/parseecp.py                           # [unix]
+    - if not exist %PREFIX%\\Library\\lib\\Faddeeva.lib exit 1              # [win]
+    - if not exist %PREFIX%\\Library\\bin\\Faddeeva.dll exit 1              # [win]
+    - if not exist %PREFIX%\\Library\\include\\libecpint.hpp exit 1         # [win]
+    - if not exist %PREFIX%\\Library\\lib\\cmake\\ecpint\\ecpint-config.cmake exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\share\\libecpint\\parseecp.py exit 1  # [win]
     # Inspect linkage
     - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT                                # [linux]
     - otool -L $PREFIX/lib/libecpint$SHLIB_EXT                              # [osx]
+    - objdump.exe -p %PREFIX%\\Library\\bin\\ecpint.dll | findstr /i "dll"  # [win]
 
 about:
   home: https://github.com/robashaw/libecpint
