@@ -1,7 +1,7 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
 #{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
-{% set sha256 = "090f4a9f4757030337229783bdebc4ccb9c7aac570b1ce9cd94f1a3c18f7625d" %}
+{% set sha256 = "cabaa0ef43f84f0130dfef9e45ed88ebc10557e29847a42bbce257f60a891f6a" %}
 
 package:
   name: {{ name|lower }}
@@ -27,7 +27,7 @@ requirements:
     - cmake
     - ninja
     #- python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
-    - python                                                                # [build_platform != target_platform]
+    - python                                                                           # only for generating a source file, so suppress all but one Py version. update as necessary.
     - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
