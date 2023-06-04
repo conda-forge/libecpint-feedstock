@@ -10,7 +10,10 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
       -B build_native \
       -G Ninja \
       -D CMAKE_C_COMPILER=${CC_FOR_BUILD} \
-      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD}
+      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD} \
+      -D LIBECPINT_USE_PUGIXML=OFF \
+      -D LIBECPINT_BUILD_TESTS=ON \
+      -D LIBECPINT_BUILD_DOCS=OFF
 
     cmake --build build_native --target generate
 fi
