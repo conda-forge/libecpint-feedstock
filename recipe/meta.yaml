@@ -1,7 +1,7 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
 #{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
-{% set sha256 = "cabaa0ef43f84f0130dfef9e45ed88ebc10557e29847a42bbce257f60a891f6a" %}
+{% set sha256 = "ffbc2da17c04f53cc50362649d1254cc7bfcf91d42974f4801463ed541ed918a" %}
 
 package:
   name: {{ name|lower }}

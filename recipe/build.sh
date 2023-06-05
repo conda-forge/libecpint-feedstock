@@ -10,10 +10,7 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
       -B build_native \
       -G Ninja \
       -D CMAKE_C_COMPILER=${CC_FOR_BUILD} \
-      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD} \
-      -D LIBECPINT_USE_PUGIXML=OFF \
-      -D LIBECPINT_BUILD_TESTS=ON \
-      -D LIBECPINT_BUILD_DOCS=OFF
+      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD}
 
     cmake --build build_native --target generate
 fi
@@ -29,6 +26,7 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_INSTALL_LIBDIR=lib \
   -D BUILD_SHARED_LIBS=ON \
   -D LIBECPINT_USE_PUGIXML=ON \
+  -D CMAKE_REQUIRE_FIND_PACKAGE_pugixml=ON \
   -D LIBECPINT_BUILD_TESTS=ON \
   -D LIBECPINT_BUILD_DOCS=OFF \
   -D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
