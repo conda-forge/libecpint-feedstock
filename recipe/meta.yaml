@@ -1,22 +1,21 @@
 {% set name = "libecpint" %}
 {% set version = "1.0.7" %}
 #{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
-{% set sha256 = "ffbc2da17c04f53cc50362649d1254cc7bfcf91d42974f4801463ed541ed918a" %}
+{% set sha256 = "e17c5c3e798754896cfa4d6ed9dd443c1bf64faec75863119949e072b25936a0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/loriab/libecpint/archive/psiecp2023.tar.gz
+  url: https://github.com/loriab/libecpint/archive/win_arm64_minimal.tar.gz
   #url: https://github.com/robashaw/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
   #patches:
   #  - 0001-cmake-migrate-C-standard-to-targets-59.patch
   sha256: {{ sha256 }}
 
 build:
-  number: 4
-#  skip: True  # [osx]
+  number: 5
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
 
@@ -26,8 +25,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja
-    #- python 3.10                                                                      # only for generating a source file, so suppress all but one Py version. update as necessary.
-    - python                                                                           # only for generating a source file, so suppress all but one Py version. update as necessary.
+    - python                                                                           # only for generating a source file, so suppress all but one Py version
     - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
@@ -41,7 +39,7 @@ test:
     - test -f $PREFIX/lib/libecpint$SHLIB_EXT                               # [unix]
     - test ! -f $PREFIX/lib/libecpint.a                                     # [unix]
     - if not exist %PREFIX%\\Library\\lib\\ecpint.lib exit 1                # [win]   # ms import lib
-    - if not exist %PREFIX%\\Library\\bin\\ecpint.dll exit 1                # [win]   # gnu/ms dyn lib
+    - if not exist %PREFIX%\\Library\\bin\\ecpint.dll exit 1                # [win]   # ms dyn lib
     # Verify accessories
     - test -f $PREFIX/lib/libFaddeeva$SHLIB_EXT                             # [unix]
     - test ! -f $PREFIX/lib/libFaddeeva.a                                   # [unix]

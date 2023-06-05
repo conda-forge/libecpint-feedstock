@@ -5,6 +5,8 @@ else
 fi
 
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
+    # ecpint has a compiled executable, `generate`, that writes source files.
+    #   generate has to run on native osx-64, not target osx-arm64, thus this extra cmake invocation.
     env -u SDKROOT -u CONDA_BUILD_SYSROOT -u CMAKE_PREFIX_PATH \
         -u CXXFLAGS -u CPPFLAGS -u CFLAGS -u LDFLAGS \
     cmake \
@@ -39,7 +41,6 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
 cmake --build build --target install -j${CPU_COUNT}
-
 
 cd build
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
