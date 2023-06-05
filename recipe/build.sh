@@ -5,12 +5,18 @@ else
 fi
 
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
+    env -u SDKROOT -u CONDA_BUILD_SYSROOT -u CMAKE_PREFIX_PATH \
+        -u CXXFLAGS -u CPPFLAGS -u CFLAGS -u LDFLAGS \
     cmake \
       -S ${SRC_DIR} \
       -B build_native \
       -G Ninja \
       -D CMAKE_C_COMPILER=${CC_FOR_BUILD} \
-      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD}
+      -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD} \
+      -D CMAKE_EXE_LINKER_FLAGS="-Wl,-rpath,$BUILD_PREFIX/lib" \
+      -D LIBECPINT_USE_PUGIXML=OFF \
+      -D LIBECPINT_BUILD_TESTS=ON \
+      -D LIBECPINT_BUILD_DOCS=OFF
 
     cmake --build build_native --target generate
 fi
@@ -22,7 +28,7 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_INSTALL_PREFIX=${PREFIX} \
   -D CMAKE_BUILD_TYPE=Release \
   -D CMAKE_C_COMPILER=${CC} \
-  -D CMAKE_CXX_COMPILER=${CXX}
+  -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_INSTALL_LIBDIR=lib \
   -D BUILD_SHARED_LIBS=ON \
   -D LIBECPINT_USE_PUGIXML=ON \
