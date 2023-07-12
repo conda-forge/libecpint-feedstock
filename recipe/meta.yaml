@@ -34,6 +34,7 @@ requirements:
 
 test:
   requires:
+    - python 3.8                                                                      # not used, but exposes error if any py310 dependence leaked from build
     - m2w64-binutils                                                        # [win]   # provides objdump.exe
   commands:
     # Verify library
