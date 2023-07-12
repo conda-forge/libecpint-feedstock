@@ -19,7 +19,7 @@ build:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
-    - python
+    #- python
 
 requirements:
   build:
