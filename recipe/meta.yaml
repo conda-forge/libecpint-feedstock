@@ -19,11 +19,8 @@ build:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
-    #- python
-    #- python                                                                # [build_platform != target_platform]
-    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   ignore_run_exports_from:
-    - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
     - python                                                                # [build_platform != target_platform]
 
 requirements:
@@ -33,16 +30,15 @@ requirements:
     - cmake
     - ninja
     - python                                                                           # only for generating a source file, so suppress all but one Py version
-    - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
     - pugixml
-    #- python
-    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
     - python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
 
 test:
   requires:
+    - python 3.8                                                                      # not used, but exposes error if any py310 dependence leaked from build
     - m2w64-binutils                                                        # [win]   # provides objdump.exe
   commands:
     # Verify library
