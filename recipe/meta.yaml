@@ -23,7 +23,7 @@ build:
     #- python                                                                # [build_platform != target_platform]
     #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   ignore_run_exports_from:
-  #  - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
     - python                                                                # [build_platform != target_platform]
 
 requirements:
@@ -39,6 +39,7 @@ requirements:
     - pugixml
     #- python
     #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    - python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
 
 test:
   requires:
