@@ -18,10 +18,12 @@ cmake %CMAKE_ARGS% ^
   -D LIBECPINT_USE_PUGIXML=ON ^
   -D LIBECPINT_BUILD_TESTS=ON ^
   -D LIBECPINT_BUILD_DOCS=OFF ^
-  -D Python_EXECUTABLE="%BUILD_PREFIX%\python.exe" ^
+  -D Python_EXECUTABLE="%PYTHON%" ^
   -D CMAKE_VERBOSE_MAKEFILE=OFF ^
   -D CMAKE_PREFIX_PATH="%LIBRARY_PREFIX%"
 if errorlevel 1 exit 1
+
+REM  -D Python_EXECUTABLE="%BUILD_PREFIX%\python.exe"
 
 cmake --build build ^
       --config Release ^

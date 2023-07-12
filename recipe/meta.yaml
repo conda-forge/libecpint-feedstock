@@ -32,7 +32,7 @@ requirements:
     - cmake
     - ninja
     #- python                                                                           # only for generating a source file, so suppress all but one Py version
-    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
     - pugixml
