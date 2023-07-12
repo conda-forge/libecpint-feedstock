@@ -20,8 +20,8 @@ build:
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
   ignore_run_exports_from:
-    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
-    - python                                                                # [build_platform != target_platform]
+    - python
+    #- python                                                                # [build_platform != target_platform]
 
 requirements:
   build:
@@ -29,16 +29,16 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja
-    - python                                                                           # only for generating a source file, so suppress all but one Py version
-    #- cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
+    #- python                                                                           # only for generating a source file, so suppress all but one Py version
   host:
     - gtest                                                                            # for ctest testing
     - pugixml
-    - python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
+    #- python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
+    - python >=3.10,<3.11.0a0 *_cpython                                                # only for generating a source file, so suppress all but one Py version
 
 test:
   requires:
-    - python 3.8                                                                      # not used, but exposes error if any py310 dependence leaked from build
+    #- python 3.8                                                                      # not used, but exposes error if any py310 dependence leaked from build
     - m2w64-binutils                                                        # [win]   # provides objdump.exe
   commands:
     # Verify library
