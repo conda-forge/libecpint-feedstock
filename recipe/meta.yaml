@@ -14,11 +14,12 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 6
+  number: 7
   run_exports:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
+    - python
 
 requirements:
   build:
