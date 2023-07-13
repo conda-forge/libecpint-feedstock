@@ -23,9 +23,6 @@ cmake %CMAKE_ARGS% ^
   -D CMAKE_PREFIX_PATH="%LIBRARY_PREFIX%"
 if errorlevel 1 exit 1
 
-REM  -D Python_EXECUTABLE="%BUILD_PREFIX%\python.exe"
-REM  -D Python_EXECUTABLE="%PYTHON%"
-
 cmake --build build ^
       --config Release ^
       --target install ^

@@ -40,9 +40,6 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
-  #-D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
-  #-D Python_EXECUTABLE="${PREFIX}/bin/python" \
-
 cmake --build build --target install -j${CPU_COUNT}
 
 cd build
