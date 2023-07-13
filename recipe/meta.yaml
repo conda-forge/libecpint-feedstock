@@ -32,7 +32,7 @@ requirements:
   host:
     - gtest                                                                            # for ctest testing
     - pugixml
-    - python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
+    #- python >=3.10,<3.11.0a0 *_cpython                                     # [build_platform != target_platform]
 
 test:
   requires:
