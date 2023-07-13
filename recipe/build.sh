@@ -37,7 +37,7 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_REQUIRE_FIND_PACKAGE_pugixml=ON \
   -D LIBECPINT_BUILD_TESTS=ON \
   -D LIBECPINT_BUILD_DOCS=OFF \
-  -D Python_EXECUTABLE="${PREFIX}/bin/python" \
+  -D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
   -D CMAKE_PREFIX_PATH="${PREFIX}"
 
   #-D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
