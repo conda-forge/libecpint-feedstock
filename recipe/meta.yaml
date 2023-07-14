@@ -14,11 +14,13 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 6
+  number: 7
   run_exports:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports:
     - pugixml                                                                          # ignore b/c static library
+  ignore_run_exports_from:
+    - python                                                                # [build_platform != target_platform]
 
 requirements:
   build:
@@ -27,7 +29,6 @@ requirements:
     - cmake
     - ninja
     - python                                                                           # only for generating a source file, so suppress all but one Py version
-    - cross-python_{{ target_platform }}                                    # [build_platform != target_platform]
   host:
     - gtest                                                                            # for ctest testing
     - pugixml
