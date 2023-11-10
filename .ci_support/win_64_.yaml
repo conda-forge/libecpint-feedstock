@@ -7,6 +7,6 @@ channel_targets:
 cxx_compiler:
 - vs2019
 pugixml:
-- '1.13'
+- '1.14'
 target_platform:
 - win-64

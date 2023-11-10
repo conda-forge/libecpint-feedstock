@@ -14,7 +14,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 9
+  number: 10
   run_exports:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports_from:
