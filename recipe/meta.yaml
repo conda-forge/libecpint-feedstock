@@ -19,9 +19,11 @@ build:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports_from:
     - python                                                                # [build_platform != target_platform]
+    - gtest
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
