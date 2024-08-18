@@ -28,6 +28,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - ninja
+    - make                                                                  # [unix]
     - python                                                                           # only for generating a source file, so suppress all but one Py version
   host:
     - gtest                                                                            # for ctest testing
