@@ -1,6 +1,6 @@
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
     ARCH_ARGS="-Dgenecpint_DIR=${PWD}/build_native"
-    LIBECPINT_BUILD_TESTS=OFF
+    LIBECPINT_BUILD_TESTS=ON
 else
     ARCH_ARGS=""
     LIBECPINT_BUILD_TESTS=ON
