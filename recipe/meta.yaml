@@ -14,18 +14,21 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 10
+  number: 11
   run_exports:
     - {{ pin_subpackage('libecpint', max_pin='x.x') }}
   ignore_run_exports_from:
     - python                                                                # [build_platform != target_platform]
+    - gtest
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
     - ninja
+    - make                                                                  # [unix]   # for emulated ctest testing
     - python                                                                           # only for generating a source file, so suppress all but one Py version
   host:
     - gtest                                                                            # for ctest testing
@@ -52,7 +55,7 @@ test:
     - if not exist %PREFIX%\\Library\\lib\\cmake\\ecpint\\ecpint-config.cmake exit 1  # [win]
     - if not exist %PREFIX%\\Library\\share\\libecpint\\parseecp.py exit 1  # [win]
     # Inspect linkage
-    - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT                                # [linux]
+    - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT                                # [linux and build_platform == target_platform]
     - otool -L $PREFIX/lib/libecpint$SHLIB_EXT                              # [osx]
     - objdump.exe -p %PREFIX%\\Library\\bin\\ecpint.dll | findstr /i "dll"  # [win]
 
