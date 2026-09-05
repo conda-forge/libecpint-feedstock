@@ -1,0 +1,101 @@
+schema_version: 1
+
+context:
+  name: libecpint
+  version: "1.0.7"
+  sha256: e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/robashaw/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: ${{ sha256 }}
+  patches:
+    - 0001-cmake-migrate-C-standard-to-targets-59.patch
+    - 0002-minimal-windows-install-and-osx_arm64-cross-compile.patch
+
+build:
+  number: 13
+
+requirements:
+  build:
+    - ${{ stdlib("c") }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - cmake
+    - ninja
+    - if: unix
+      then: make
+    - python  # only for generating a source file, so suppress all but one Py version
+  host:
+    - gtest  # for ctest testing
+    - pugixml
+  run_exports:
+    - ${{ pin_subpackage('libecpint', upper_bound='x.x') }}
+  ignore_run_exports:
+    from_package:
+      - if: build_platform != target_platform
+        then: python
+      - gtest
+
+tests:
+  - requirements:
+      run:
+        - if: win
+          then: m2w64-binutils
+    script:
+      - if: unix
+        then: test -f $PREFIX/lib/libecpint$SHLIB_EXT
+      - if: unix
+        then: test ! -f $PREFIX/lib/libecpint.a
+      - if: win
+        then: if not exist %PREFIX%\\Library\\lib\\ecpint.lib exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\bin\\ecpint.dll exit 1
+      - if: unix
+        then: test -f $PREFIX/lib/libFaddeeva$SHLIB_EXT
+      - if: unix
+        then: test ! -f $PREFIX/lib/libFaddeeva.a
+      - if: unix
+        then: test -f $PREFIX/include/libecpint.hpp
+      - if: unix
+        then: test -f $PREFIX/lib/cmake/ecpint/ecpint-config.cmake
+      - if: unix
+        then: test -f $PREFIX/share/libecpint/parseecp.py
+      - if: win
+        then: if not exist %PREFIX%\\Library\\lib\\Faddeeva.lib exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\bin\\Faddeeva.dll exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\include\\libecpint.hpp exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\lib\\cmake\\ecpint\\ecpint-config.cmake exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\share\\libecpint\\parseecp.py exit 1
+      - if: linux and build_platform == target_platform
+        then: ldd -v $PREFIX/lib/libecpint$SHLIB_EXT
+      - if: osx
+        then: otool -L $PREFIX/lib/libecpint$SHLIB_EXT
+      - if: win
+        then: objdump.exe -p %PREFIX%\\Library\\bin\\ecpint.dll | findstr /i "dll"
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: A C++ library for the efficient evaluation of integrals over effective core potentials.
+  description: |
+    Libecpint is a C++ library for the efficient evaluation of integrals
+    over ab initio effective core potentials, using a mixture of
+    generated, recursive code and Gauss-Chebyshev quadrature. It is
+    designed to be standalone and generic, and is now in its first stable
+    release. If you experience any problems please raise an issue here;
+    contributions and suggestions are also welcome.
+  homepage: https://github.com/robashaw/libecpint
+  repository: https://github.com/robashaw/libecpint
+  documentation: https://libecpint.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
