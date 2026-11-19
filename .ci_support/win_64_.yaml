@@ -12,7 +12,5 @@ cxx_compiler:
 - vs
 cxx_compiler_version:
 - '2022'
-pugixml:
-- '1.15'
 target_platform:
 - win-64
