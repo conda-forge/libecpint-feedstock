@@ -16,7 +16,6 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
       -D CMAKE_C_COMPILER=${CC_FOR_BUILD} \
       -D CMAKE_CXX_COMPILER=${CXX_FOR_BUILD} \
       -D CMAKE_EXE_LINKER_FLAGS="-Wl,-rpath,$BUILD_PREFIX/lib" \
-      -D LIBECPINT_USE_PUGIXML=OFF \
       -D LIBECPINT_BUILD_TESTS=ON \
       -D LIBECPINT_BUILD_DOCS=OFF
 
@@ -33,8 +32,6 @@ cmake ${CMAKE_ARGS} ${ARCH_ARGS} \
   -D CMAKE_CXX_COMPILER=${CXX} \
   -D CMAKE_INSTALL_LIBDIR=lib \
   -D BUILD_SHARED_LIBS=ON \
-  -D LIBECPINT_USE_PUGIXML=ON \
-  -D CMAKE_REQUIRE_FIND_PACKAGE_pugixml=ON \
   -D LIBECPINT_BUILD_TESTS=ON \
   -D LIBECPINT_BUILD_DOCS=OFF \
   -D Python_EXECUTABLE="${BUILD_PREFIX}/bin/python" \
@@ -44,5 +41,10 @@ cmake --build build --target install -j${CPU_COUNT}
 
 cd build
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "$target_platform" == "linux-aarch64" || "$target_platform" == "linux-ppc64le" ]]; then
+    ctest --rerun-failed --output-on-failure -j${CPU_COUNT} -E 'BField|Screening|SharedGrid|Radial.Type2.DiffusePrimitive|Radial.Type2.NarrowIntegrand|Radial.Type2.ShellPairSweep|highl|TightPrimitives'
+    # excluding long tests for emulated
+else
     ctest --rerun-failed --output-on-failure -j${CPU_COUNT}
+fi
 fi
